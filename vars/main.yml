@@ -1,0 +1,18 @@
+---
+# vars file for cdougan-sssd
+shared_ad_homedir: /home/adusers
+ad_realms:
+  - { domain: 'somedomain.co.uk', realm: 'net.somedomain.co.uk' }
+  - { domain: 'anotherdomain.net',          realm: 'anotherdomain.net' }
+  - { domain: 'andanother.co.uk',  realm: 'andanother.co.uk' }
+yum_packages:
+ - sssd
+ - authconfig
+ - oddjob
+ - oddjob-mkhomedir
+ - adcli
+ - samba-common
+ - samba-common-tools
+ - krb5-workstation
+ - openldap-clients
+ - policycoreutils-python

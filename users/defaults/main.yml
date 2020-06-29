@@ -1,0 +1,5 @@
+---
+# defaults file for cdougan-sssd/users
+adusers: []
+user_type: unknown
+sudousers: []

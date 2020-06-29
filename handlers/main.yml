@@ -1,0 +1,7 @@
+---
+# handlers file for cdougan-sssd
+ - name: restart_sssd
+   systemd:
+     name: sssd
+     state: restarted
+     daemon-reload: yes

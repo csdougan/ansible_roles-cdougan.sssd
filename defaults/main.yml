@@ -1,0 +1,10 @@
+---
+# defaults file for cdougan-sssd
+domain_lookup:
+  - { domain: "somedomain.co.uk", server: "net.someserver.co.uk", ou: "OU=Some Group, OU=some domain", dyndnsserver: "" }
+domain: somedomain.co.uk
+ad_user: someone
+ad_password: somepassword
+ad_ou: "{{ (domain_lookup|selectattr('domain','search', domain )|list|first).ou }}"
+ad_server: "{{ (domain_lookup|selectattr('domain','search', domain )|list|first).server }}"
+ad_dyndnsserver: "{{ (domain_lookup|selectattr('domain','search', domain )|list|first).dyndnsserver }}"

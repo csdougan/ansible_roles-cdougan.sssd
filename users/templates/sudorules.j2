@@ -1,0 +1,3 @@
+{% for aduser in adusers %}{% for sudouser in sudousers %}
+{{ aduser | replace(' ', '\\ ') }}        ALL=({{ sudouser }}) NOPASSWD: ALL
+{% endfor %}{% endfor %}

@@ -1,0 +1,21 @@
+---
+# tasks file for cdougan-sssd/add_groups
+ - name: Ensure directory for facts exists
+   file:
+     state: directory
+     path: /etc/ansible/facts.d
+
+ - name: create fact file from template
+   template:
+      src: groups-ansible_facts.j2
+      dest: "/etc/ansible/facts.d/adgroups-{{ group_type }}.fact"
+ 
+ - name: Remove old format sudo file if present
+   file:
+     name: "/etc/sudoers.d/{{ group_type }}"
+     state: absent
+
+ - name: create sudo file for the group
+   template:
+     src: sudorules.j2
+     dest: "/etc/sudoers.d/{{ group_type }}_groups"

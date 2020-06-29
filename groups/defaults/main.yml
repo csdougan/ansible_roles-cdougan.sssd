@@ -1,0 +1,5 @@
+---
+# defaults file for cdougan-sssd/add_groups
+adgroups: []
+group_type: unknown
+sudousers: []

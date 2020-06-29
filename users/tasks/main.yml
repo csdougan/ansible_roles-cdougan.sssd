@@ -1,0 +1,16 @@
+---
+# tasks file for cdougan-sssd/add_users
+ - name: Ensure directory for facts exists
+   file:
+     state: directory
+     path: /etc/ansible/facts.d
+
+ - name: create fact file from template
+   template:
+      src: users-ansible_facts.j2
+      dest: "/etc/ansible/facts.d/adusers-{{ user_type }}.fact"
+ 
+ - name: create sudo file for the group
+   template:
+     src: sudorules.j2
+     dest: "/etc/sudoers.d/{{ user_type }}_users"

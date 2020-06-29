@@ -1,0 +1,22 @@
+
+[sssd]
+domains = {{ ad_realm|lower }}
+config_file_version = 2
+services = nss, pam
+
+[domain/{{ ad_realm|lower }}]
+ad_hostname = {{ ansible_fqdn }}
+dyndns_server = {{ ad_dyndnsserver }}
+ad_domain = {{ ad_realm|lower }}
+krb5_realm = {{ ad_realm|upper }}
+realmd_tags = manages-system joined-with-samba 
+cache_credentials = True
+id_provider = ad
+krb5_store_password_if_offline = True
+default_shell = /bin/bash
+ldap_id_mapping = True
+use_fully_qualified_names = False
+fallback_homedir = {{ shared_ad_homedir }}
+access_provider = simple
+simple_allow_groups = {{ all_ad_groups|default('') }}
+ignore_group_members = True

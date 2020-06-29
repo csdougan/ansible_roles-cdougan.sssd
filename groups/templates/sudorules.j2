@@ -1,0 +1,3 @@
+{% for adgroup in adgroups %}{% for sudouser in sudousers %}
+%{{ adgroup | replace(' ', '\\ ') }}        ALL=({{ sudouser }}) NOPASSWD: ALL
+{% endfor %}{% endfor %}

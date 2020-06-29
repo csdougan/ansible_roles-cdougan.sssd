@@ -1,0 +1,27 @@
+---
+# tasks file for cdougan-sssd/refresh
+ - name: Re-gather facts
+   setup:
+
+ - name: Search local facts for any prefixed with adgroups - these contain lists of the users to configure sssd to allow access to
+   set_fact:
+     local_facts_containing_ad_groups: "{{ ansible_local | select('match', '^adgroups') | list|default([])}}"
+     local_facts_containing_ad_users: "{{ ansible_local | select('match', '^adusers') | list|default([])}}"
+
+ - set_fact:
+     all_ad_groups: "{% set output=[] %}{% for fact_name in local_facts_containing_ad_groups %}{% for group in ansible_local[fact_name] %}{{ output.append(group) }}{% endfor %}{% endfor %}{{ output|join(',')}}"
+     all_ad_users: "{% set output=[] %}{% for fact_name in local_facts_containing_ad_users %}{% for user in ansible_local[fact_name] %}{{ output.append(user) }}{% endfor %}{% endfor %}{{ output|join(',')}}"
+
+ - lineinfile:
+     path: /etc/sssd/sssd.conf
+     regexp: '^simple_allow_groups'
+     line: "simple_allow_groups = {{ all_ad_groups }}"
+   notify:
+    - restart_sssd
+
+ - lineinfile:
+     path: /etc/sssd/sssd.conf
+     regexp: '^simple_allow_users'
+     line: "simple_allow_users = {{ all_ad_users }}"
+   notify:
+    - restart_sssd
